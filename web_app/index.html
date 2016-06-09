@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>mobile app</title>
+	<script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="app.js"></script>
+	<style type="text/css">
+		body {
+			font-family: Tahoma;
+		}
+		.loading { padding: 20px; background-color: #e8e8e8; }
+		.roomList {
+			padding: 20px;
+		}
+		.roomList div {
+			font-family: Tahoma;
+			padding: 5px;
+		}
+		.roomList div:hover { background-color: yellow; cursor: pointer; }
+		.schedule {
+			padding: 20px;
+		}
+		.schedule .roomName {
+			padding: 5px;
+			background-color: #e8e8e8;
+		}
+		.schedule .roomName span {
+			font-weight: bold;
+			color: red;
+		}
+
+		.schedule .scheduleItem {
+			padding: 5px;
+		}
+
+		.schedule .scheduleItem:hover {background-color: yellow; cursor: pointer;}
+	</style>
+</head>
+<body>
+	<div class="loading" data-bind="visible: loadingMessage, text: loadingMessage"></div>
+	<div class="roomList" data-bind="foreach: rooms">
+		<div data-bind="text: $data, click: $parent.handleRoomClick"></div>
+	</div>
+	<div class="schedule" data-bind="visible: schedule">
+		<div class="roomName">Showing schedule for room <span data-bind="text: lastClickedRoom"></span></div>
+		<!-- ko foreach: schedule -->
+		<div class="scheduleItem" data-bind="click: $root.handleScheduleItemClick">Start: <span data-bind="text: _vm.prettifyDate($data.start)"></span>, duration: <span data-bind="text: $data.duration + ' mins'"></span></div>
+		<!-- /ko -->
+
+	</div>
+</body>
+</html>
